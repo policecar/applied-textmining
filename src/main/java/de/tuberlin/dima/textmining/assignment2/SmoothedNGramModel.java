@@ -1,34 +1,35 @@
 package de.tuberlin.dima.textmining.assignment2;
 
-import com.google.common.collect.Lists;
-
-import java.util.Collection;
 import java.util.List;
 
-public class SmoothedNGramModel implements LanguageModel {
+import com.google.common.base.Preconditions;
 
-  @Override
-  public void train(Collection<List<String>> corpus) {
-    //TODO: INSERT CODE HERE
-  }
+public class SmoothedNGramModel extends NGramModel {
 
-  @Override
-  public double getWordProbability(List<String> sentence, int index) {
-    //TODO: INSERT CODE HERE
-    return 0;
-  }
+	public double getWordProbability(List<String> sentence, int index) {
 
-  @Override
-  public double sentenceLogProbability(List<String> sentence) {
-    //TODO: INSERT CODE HERE
-    return 0;
-  }
+		String word = sentence.get(index);
+		String history = sentence.get(index-1);
+	    double wordProbability = ((bigramCounter.getCount(history, word) + 1.0) / (totalSum + 1.0))
+	    		/ ((bigramCounter.totalCount(history) + bigramCounter.getCounter(history).entrySet().size()) / (totalSum + 1.0));
+	    if (wordProbability == 0.0) {
+	    	wordProbability = 1.0 / (totalSum + 1.0);
+	    }
+		Preconditions.checkArgument(wordProbability > 0);		
+	    return wordProbability;
+	}
+  	
+	protected String generateWord(String history) {
 
-  @Override
-  public Iterable<String> generateSentence() {
-    List<String> sentence = Lists.newArrayList();
-    //TODO: INSERT CODE HERE
-    return sentence;
-  }
-
+		double sample = Math.random();
+		double sum = 0.0;
+		for (String word : bigramCounter.getCounter(history).keySet()) {
+			sum += ((bigramCounter.getCount(history, word) + 1.0) / totalSum) 
+					/ ((bigramCounter.totalCount(history) + bigramCounter.getCounter(history).size()) / totalSum);
+			if (sum > sample) {
+				return word;
+			}
+		}
+		return "<unk>";
+	}		
 }
