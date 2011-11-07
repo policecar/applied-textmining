@@ -70,8 +70,35 @@ public class ShallowExtractor {
 	 */
 	public Iterable<SimpleRelation> findApposition(Iterable<ShallowSentence> sentences) {
 
-		return null;
+		ArrayList<SimpleRelation> appositions = new ArrayList<SimpleRelation>();
+		Iterator<ShallowSentence> iter = sentences.iterator();
 
+		while (iter.hasNext()) {
+			ShallowSentence sentence = iter.next();
+			Iterator<ShallowToken> it = sentence.iterator();
+			String name = "";
+			String isA = "";
+			int cnt = 0;
+			
+			while (it.hasNext()) {
+				ShallowToken token = it.next();
+				if (token.getTag().equals("NNP")){
+					name += token.getText() + " ";
+					cnt += 1;
+				} else if (token.getTag().equals("NN") || token.getTag().equals("JJ")) {
+					isA += token.getText() + " ";
+					cnt += 1;
+				} else {
+					name = "";
+					isA = "";
+					cnt = 0;
+				}
+			}
+			if (cnt > 3 && name.length() > 3 && isA.length() > 3) {
+				appositions.add(new SimpleRelation(RelationType.APPOSITION, name, isA));
+			}
+		}
+		return appositions;
 	}
 
 }
