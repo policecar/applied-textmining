@@ -1,8 +1,6 @@
-package de.tuberlin.dima.textmining.assignment3;
+package de.tuberlin.dima.textmining.assignment6;
 
 import java.io.Serializable;
-
-import edu.stanford.nlp.io.RuntimeIOException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -106,7 +104,8 @@ public class ShallowToken implements Serializable {
 			job.put("tag", tag);
 			job.put("lemma", lemma);
 		} catch (JSONException e) {
-			throw new RuntimeException(e);
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		return job;
