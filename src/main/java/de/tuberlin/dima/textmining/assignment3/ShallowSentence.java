@@ -2,6 +2,7 @@ package de.tuberlin.dima.textmining.assignment3;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 
 import com.google.common.collect.Lists;
 import org.json.JSONArray;
@@ -11,16 +12,18 @@ import org.json.JSONObject;
 /**
  * The Class ShallowSentence is a shallow tagged sentence consisting of a Vector of ShallowToken.
  */
-public class ShallowSentence implements Iterable<ShallowToken> {
-
-  private final List<ShallowToken> tokens;
+public class ShallowSentence extends Vector<ShallowToken> implements Iterable<ShallowToken> {
+	
+	private static final long serialVersionUID = -1949928738463344864L;
+	private final List<ShallowToken> tokens;
+	
 	/**
 	 * Instantiates a new shallow sentence given a vector of ShallowToken.
 	 *
 	 * @param tokens the tokens
 	 */
 	public ShallowSentence(Iterable<ShallowToken> tokens) {
-    this.tokens = Lists.newArrayList(tokens);
+		this.tokens = Lists.newArrayList(tokens);
 	}
 
 	/**
@@ -30,7 +33,7 @@ public class ShallowSentence implements Iterable<ShallowToken> {
 	 */
 	public ShallowSentence(JSONObject sentenceJson) {
 
-    this.tokens = Lists.newArrayList();
+		this.tokens = Lists.newArrayList();
 
 		try {
 			JSONArray instances = sentenceJson.getJSONArray("tokens");
