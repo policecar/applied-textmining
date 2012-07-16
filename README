@@ -1,5 +1,8 @@
 Applied Text Mining
 
-some coursework in basic textmining and natural language processing, e.g.
-keyword extraction, ngram-based language modeling, mining generic relations, 
-synonym substitution, ...
+some coursework in basic textmining and natural language processing, 
+e.g. keyword extraction, ngram-based language modeling, mining generic relations, synonym substitution, ...
+
+
+Run the JUnitTests in src/test/java/de/tuberlin/dima/textmining/ to see some output
+( consider increasing PermGen and Java heap space, cf. -XX:MaxPermSize=256m -Xms1024m -Xmx1024m )
